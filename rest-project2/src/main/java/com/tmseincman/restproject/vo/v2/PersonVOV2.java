@@ -1,9 +1,10 @@
-package com.tmseincman.restproject.vo.v1;
+package com.tmseincman.restproject.vo.v2;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class PersonVO implements Serializable {
+public class PersonVOV2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -12,8 +13,9 @@ public class PersonVO implements Serializable {
     private String lastName;
     private String address;
     private String gender;
+    private Date birthDate;
 
-    public PersonVO() {
+    public PersonVOV2() {
     }
 
     public Long getId() {
@@ -56,17 +58,25 @@ public class PersonVO implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PersonVO personVO = (PersonVO) o;
-        return Objects.equals(id, personVO.id) && Objects.equals(firstName, personVO.firstName) && Objects.equals(lastName, personVO.lastName) && Objects.equals(address, personVO.address) && Objects.equals(gender, personVO.gender);
+        PersonVOV2 that = (PersonVOV2) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender) && Objects.equals(birthDate, that.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, address, gender, birthDate);
     }
 }
 

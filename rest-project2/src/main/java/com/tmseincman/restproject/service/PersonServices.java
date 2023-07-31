@@ -2,9 +2,11 @@ package com.tmseincman.restproject.service;
 
 import com.tmseincman.restproject.exception.ResourceNotFoundException;
 import com.tmseincman.restproject.mapper.ProjectMapper;
+import com.tmseincman.restproject.mapper.custom.PersonMapper;
 import com.tmseincman.restproject.model.Person;
 import com.tmseincman.restproject.repository.PersonRepository;
 import com.tmseincman.restproject.vo.v1.PersonVO;
+import com.tmseincman.restproject.vo.v2.PersonVOV2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    PersonMapper mapper;
 
     public PersonVO findById(Long id){
 
@@ -40,6 +45,12 @@ public class PersonServices {
         logger.info("Creating one person");
         var entity = ProjectMapper.parseObject(person, Person.class);
         return ProjectMapper.parseObject(personRepository.save(entity), PersonVO.class);
+    }
+
+    public PersonVOV2 createV2(PersonVOV2 person){
+        logger.info("Creating one person");
+        var entity = mapper.convertVoToEntity(person);
+        return mapper.convertEntityToVo(personRepository.save(entity));
     }
 
     public PersonVO update(PersonVO person){
