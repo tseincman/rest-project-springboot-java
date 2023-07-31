@@ -1,9 +1,12 @@
 package com.tmseincman.restproject.vo.v1;
 
+import com.tmseincman.restproject.model.Person;
+import org.springframework.hateoas.RepresentationModel;
+
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PersonVO implements Serializable {
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

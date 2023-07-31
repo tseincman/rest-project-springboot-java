@@ -1,11 +1,14 @@
 package com.tmseincman.restproject.service;
 
+import com.tmseincman.restproject.controller.PersonController;
 import com.tmseincman.restproject.exception.ResourceNotFoundException;
 import com.tmseincman.restproject.mapper.ProjectMapper;
 import com.tmseincman.restproject.model.Person;
 import com.tmseincman.restproject.repository.PersonRepository;
 import com.tmseincman.restproject.vo.v1.PersonVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,8 +28,10 @@ public class PersonServices {
 
         logger.info("Finding one person");
 
-        return ProjectMapper.parseObject(personRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID")), PersonVO.class) ;
+        PersonVO vo = ProjectMapper.parseObject(personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID")), PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return vo;
     }
 
     public List<PersonVO> findAll(){
